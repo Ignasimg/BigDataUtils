@@ -1,5 +1,10 @@
 <?php
-
+/*
+* BigDataUtils
+*
+* MassMean class - utility to compute the mean, variance or std.Dev of a continuous stream of values, 
+*   in an efficient way. While also being capable of removing some values from the calculation on a later date.
+*/
 class MassMean {
 
   private $_mean;
