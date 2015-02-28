@@ -97,9 +97,9 @@ class NeuralNetwork {
     //     :: outputs value/s are exactly 0 or 1
 
     // Handle cases with a single input
-    if (!is_array($inputs)) $input = array($inputs);
+    if (!is_array($inputs)) $inputs = array($inputs);
     // Handle cases with a single output
-    if (!is_array($outputs)) $output = array($outputs);
+    if (!is_array($outputs)) $outputs = array($outputs);
 
     // Size of input array must be equal to the number of input units
     assert(count($inputs) == $this->_nodes[0]);
@@ -118,7 +118,7 @@ class NeuralNetwork {
     // $this->_ForwardPropagate($this->_weights, $inputs);
 
     // Propagate the errors backwards
-    $this->_BackwardPropagate($this->_weights, $outputs);
+    $this->_BackwardPropagate($outputs);
 
     // Calculate the partial derivatives of _Cost with respect to _weights
     // For each layer that has receiver nodes.
@@ -147,7 +147,7 @@ class NeuralNetwork {
       // For each receiver node within the layer
       for ($r_node = 1; $r_node < $this->_nodes[$layer] + 1; ++$r_node) {
         // For each emitter node in the previous layer
-        for ($e_node = 1; $e_node < $this->_nodes[$layer - 1] + 1; ++$e_node) {
+        for ($e_node = 0; $e_node < $this->_nodes[$layer - 1] + 1; ++$e_node) {
           $new_weights[$layer][$r_node][$e_node] -= 
             $learning_rate * $partialDerivativesCost[$layer][$r_node][$e_node];
         }
@@ -156,14 +156,15 @@ class NeuralNetwork {
 
     // Compute cost with the new weights
     $new_cost = $this->_Cost($new_weights, $inputs, $outputs);
+
     // If new cost is better (lower) than initial cost, replace the weights
     if ($new_cost < $initial_cost) $this->_weights = $new_weights;
-    
+
   }
 
   private function _ForwardPropagate(&$weights, &$inputs) {
     // Initialize the activations of the first layer with the input values
-    for ($node = 1; $node < $this->_nodes[0]; ++$node) {
+    for ($node = 1; $node < $this->_nodes[0] + 1; ++$node) {
       $this->_activations[0][$node] = $inputs[$node-1];
     }
     
@@ -173,13 +174,13 @@ class NeuralNetwork {
       // For each node within the layer, that receives inputs
       for ($r_node = 1; $r_node < $this->_nodes[$layer] + 1; ++$r_node) {
         // Start the calculation with the bias unit from the previous layer.
-        $res = $this->_weights[$layer][$r_node][0];
+        $res = $weights[$layer][$r_node][0];
         // For each node in the previous layer, that's an emitter
-        // (Excluding bias cause we already used it)
+        // (Excluding bias cause we already used it) 
         for ($e_node = 1; $e_node < $this->_nodes[$layer - 1] + 1; ++$e_node) {
           // Accumulate the activations of the emitter nodes
           // multiplied by the weight of the relation
-          $res += $this->_weights[$layer][$r_node][$e_node] * 
+          $res += $weights[$layer][$r_node][$e_node] * 
                   $this->_activations[$layer-1][$e_node];
         }
         // The activation for the node is computed by applying sigmoid
@@ -188,7 +189,7 @@ class NeuralNetwork {
     } 
   }
 
-  private function _BackwardPropagate(&$weights, &$outputs) {
+  private function _BackwardPropagate(&$outputs) {
     $layers = count($this->_nodes);
     // Number of classes (output units)
     $classes = $this->_nodes[$layers - 1];
@@ -213,7 +214,7 @@ class NeuralNetwork {
         for ($r_node = 1; $r_node < $this->_nodes[$layer + 1] + 1; ++$r_node) {
           // Accumulate the errors of the receiver nodes
           // multiplied by the weight of the relation
-          $res = $this->_weights[$layer+1][$r_node][$e_node] *
+          $res += $this->_weights[$layer+1][$r_node][$e_node] *
                  $this->_errors[$layer+1][$r_node];
         }
         // We calculate emitter node error, discarding the error produced by receiver nodes.
@@ -224,10 +225,17 @@ class NeuralNetwork {
   }
 
   public function Hypothesis($inputs) {
+    if (!is_array($inputs)) $inputs = func_get_args();
+
+    assert(count($inputs) == $this->_nodes[0]);
+
     return $this->_Hypothesis($this->_weights, $inputs);
   }
 
   private function _Hypothesis(&$weights, &$inputs) {
+    // PRE :: inputs is an array with length equal to the number of input units
+    //          on the neural network.
+
     $this->_ForwardPropagate($weights, $inputs);
     return $this->_activations[count($this->_nodes) - 1];
   }
@@ -241,7 +249,6 @@ class NeuralNetwork {
     // For each output node
     for ($node = 0; $node < $this->_nodes[count($this->_nodes) - 1]; ++$node) {
       $real_output = $outputs[$node];
-      
       $calc_output = $hypothesis[$node + 1];
       // Accomulate the error between the real output and the hypothesized one. 
       $res += -$real_output*log($calc_output) - (1-$real_output)*log(1 - $calc_output);
