@@ -7,7 +7,7 @@ Specially throught online algorithms.
 - [x] NeuralNetwork - Utility for classifiying - learning method: online.
 - [ ] KMeans - Utility for clustering.
 - [ ] InsertionSort - Utility for keeping a list always sorted.
-- [ ] TimedList - Utility to keep a list of items for a given time.
+- [x] TimedList - Utility to keep a list of items for a given time.
 
 ##TODOS
 - [ ] Improve performance of NeuralNetwork class.
