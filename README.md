@@ -1,4 +1,4 @@
-# BigDataUtils
+# OnlineDataUtils
 A few handmade utilities to deal with big datasets.
 Specially throught online algorithms.
 
