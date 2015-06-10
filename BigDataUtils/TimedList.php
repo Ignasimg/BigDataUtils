@@ -11,9 +11,11 @@ class TimedList {
   private $_list;
 
   function __construct($TTL, $callback) {
+    assert($TTL > 0);
+    assert(is_callable($callback));
     $this->_TTL = $TTL;
     $this->_callback = $callback;
-    $this->_list = array();
+    $this->_list = new SplQueue();
   }
 
   public function Now($now) {
@@ -21,13 +23,12 @@ class TimedList {
 
     $this->_now = $now;
 
-    while (!empty($this->_list) and ($this->_list[0][0] + $this->_TTL <= $this->_now)) {
-      if (!empty($this->_callback)) call_user_func($this->_callback, $this->_list[0][1]);
-      array_splice($this->_list, 0, 1);
+    while (!$this->_list->isEmpty() and ($this->_list->bottom()[0] + $this->_TTL <= $this->_now)) {
+      call_user_func($this->_callback, $this->_list->dequeue()[1]);
     }
   }
 
   public function Add($object) {
-    $this->_list[] = array($this->_now, $object);
+    $this->_list->enqueue(array($this->_now, $object));
   }
 }
