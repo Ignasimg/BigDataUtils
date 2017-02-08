@@ -1,5 +1,5 @@
 # BigDataUtils
-A few handmade utilities to deal with big datasets.
+A few prototypes of various utilities to deal with big datasets.
 Specially throught online algorithms.
 
 ##Utilities
@@ -8,7 +8,7 @@ Specially throught online algorithms.
 - [ ] KMeans - Utility for clustering.
 - [ ] InsertionSort - Utility for keeping a list always sorted.
 - [x] TimedList - Utility to keep a list of items for a given time.
-- [ ] BuyOrRent - Utility to determine weather to 'buy' or to 'rent' - ski rental problem.
+- [x] BuyOrRent - Utility to determine weather to 'buy' or to 'rent' - ski rental problem.
 - [ ] WeightedMajority - Utility to choose the best prediction from a pool of predictions.
 - [ ] Winnow - Utility for classifiying.
 
