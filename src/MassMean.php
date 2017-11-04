@@ -63,4 +63,18 @@ class MassMean {
     }
   }
 
+    public function getMean(): float
+    {
+        return $this->_mean;
+    }
+
+    public function getVariance(): float
+    {
+        return $this->_variance;
+    }
+
+    public function getNumValues(): int
+    {
+        return $this->_numValues;
+    }
 }
