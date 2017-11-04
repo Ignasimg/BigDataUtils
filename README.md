@@ -1,4 +1,6 @@
 # BigDataUtils
+[![Build Status](https://travis-ci.org/Ignasimg/BigDataUtils.svg?branch=master)](https://travis-ci.org/Ignasimg/BigDataUtils)
+
 A few prototypes of various utilities to deal with big datasets.
 Specially throught online algorithms.
 
