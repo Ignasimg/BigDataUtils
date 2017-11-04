@@ -19,7 +19,7 @@ class Probability {
 
     for ($i = 0; $i < $this->_N; ++$i) {
       if ($probabilities[$i] < 1) {
-        $small[] = $i;TimedList
+        $small[] = $i;
       } 
       else {
         $large[] = $i;
