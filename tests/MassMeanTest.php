@@ -7,14 +7,25 @@ use PHPUnit\Framework\TestCase;
 
 class MassMeanTest extends TestCase
 {
-    public function testMeanIsCorrect()
+    /**
+     * @dataProvider meanProvider
+     */
+    public function testMeanIsCorrect(float $expectedMean, array $values)
     {
         $sut = new MassMean();
 
-        $sut->AddValue(1);
-        $sut->AddValue(2);
-        $sut->AddValue(3);
+        foreach ($values as $value) {
+            $sut->AddValue($value);
+        }
 
-        self::assertSame(2.0, $sut->getMean());
+        self::assertSame($expectedMean, $sut->getMean());
+    }
+
+    public function meanProvider(): array
+    {
+        return [
+            'simplest case' => [ 1.0, [1] ],
+            'simple case' => [ 2.0, [1,2,3] ]
+        ];
     }
 }
