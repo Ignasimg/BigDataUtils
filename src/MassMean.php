@@ -1,4 +1,7 @@
 <?php
+
+namespace IgnasiMG\BigDataUtils;
+
 /*
 * BigDataUtils
 *

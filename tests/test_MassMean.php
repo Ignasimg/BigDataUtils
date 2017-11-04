@@ -1,6 +1,8 @@
 <?php
 
-require_once('../BigDataUtils/MassMean.php');
+use IgnasiMG\BigDataUtils\MassMean;
+
+require_once __DIR__ . '/../vendor/autoload.php';
 
 function mean($array) {
   if (count($array) == 0) return 0;

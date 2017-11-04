@@ -1,5 +1,7 @@
 <?php
 
+namespace IgnasiMG\BigDataUtils;
+
 class TimedList {
 
   private $_TTL = 0;

@@ -1,7 +1,8 @@
 <?php
 
-require_once('../BigDataUtils/NeuralNetwork.php');
+use IgnasiMG\BigDataUtils\NeuralNetwork;
 
+require_once __DIR__ . '/../vendor/autoload.php';
 
 // We create a NeuralNetwork with a structure of
 //  2 inputs, 
@@ -14,8 +15,8 @@ $nn = new NeuralNetwork(2, 5, 1);
 //  20000 should be fine for our test.
 for ($i = 0; $i < 20000; ++$i) {
   // produce random inputs 0 or 1
-  $input_1 = mt_rand(0, 1);
-  $input_2 = mt_rand(0, 1);
+  $input_1 = random_int(0, 1);
+  $input_2 = random_int(0, 1);
   // produce the output in this case the XOR function
   $result = $input_1 ^ $input_2;
   

@@ -1,0 +1,20 @@
+{
+    "name": "ignasimg/big-data-utils",
+    "description": "A few prototypes of various utilities to deal with big datasets",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "IgnasiMG\\BigDataUtils\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "IgnasiMG\\Tests\\BigDataUtils\\": "tests/"
+        }
+    },
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^6.4"
+    }
+}

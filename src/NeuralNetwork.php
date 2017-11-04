@@ -1,5 +1,7 @@
 <?php
 
+namespace IgnasiMG\BigDataUtils;
+
 class NeuralNetwork {
 
   // Array indexed by layer number between

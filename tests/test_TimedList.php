@@ -1,6 +1,8 @@
 <?php
 
-require_once('../BigDataUtils/TimedList.php');
+use IgnasiMG\BigDataUtils\TimedList;
+
+require_once __DIR__ . '/../vendor/autoload.php';
 
 $tl = new TimedList(5, function ($object) { echo 'Removing: '.$object.PHP_EOL; });
 

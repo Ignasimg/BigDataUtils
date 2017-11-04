@@ -1,6 +1,6 @@
 <?php
 
-require_once 'MassMean.php';
+namespace IgnasiMG\BigDataUtils;
 
 // Explanation http://keithschwarz.com/darts-dice-coins/
 // Source slightly tuned from https://gist.github.com/tystr/3171981
@@ -19,7 +19,7 @@ class Probability {
 
     for ($i = 0; $i < $this->_N; ++$i) {
       if ($probabilities[$i] < 1) {
-        $small[] = $i;
+        $small[] = $i;TimedList
       } 
       else {
         $large[] = $i;
