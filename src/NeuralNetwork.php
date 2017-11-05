@@ -23,9 +23,14 @@ class NeuralNetwork {
   // Array indexed by layer and node
   // each position contains the error of the activation
   // of the node in the layer.
-  private $_errors; 
+  private $_errors;
 
-  function __construct($architecture) {
+  /**
+   * NeuralNetwork constructor.
+   *
+   * @param array $architecture
+   */
+  function __construct(array $architecture) {
     // Handle initialization such as NeuralNetwork(3,5,1);
     if (!is_array($architecture)) $architecture = func_get_args();
 
@@ -39,7 +44,7 @@ class NeuralNetwork {
     $this->_Init($architecture);  
   }
 
-  private function _Init($architecture) {
+  private function _Init(array $architecture) {
     // PRE :: $architecture is an array
     //     :: $architecture has length >= 2
     //     :: for each $i, $architecture[$i] >= 1
@@ -94,7 +99,11 @@ class NeuralNetwork {
     }
   }
 
-  public function Train($inputs, $outputs) {
+  /**
+   * @param array $inputs
+   * @param array $outputs
+   */
+  public function Train(array $inputs, array $outputs) {
     // PRE :: inputs value/s are between 0 and 1
     //     :: outputs value/s are exactly 0 or 1
 
@@ -150,8 +159,7 @@ class NeuralNetwork {
       for ($r_node = 1; $r_node < $this->_nodes[$layer] + 1; ++$r_node) {
         // For each emitter node in the previous layer
         for ($e_node = 0; $e_node < $this->_nodes[$layer - 1] + 1; ++$e_node) {
-          $new_weights[$layer][$r_node][$e_node] -= 
-            $learning_rate * $partialDerivativesCost[$layer][$r_node][$e_node];
+          $new_weights[$layer][$r_node][$e_node] -= $learning_rate * $partialDerivativesCost[$layer][$r_node][$e_node];
         }
       }
     }
@@ -226,7 +234,11 @@ class NeuralNetwork {
     }
   }
 
-  public function Hypothesis($inputs) {
+  /**
+   * @param array $inputs
+   * @return mixed
+   */
+  public function Hypothesis(array $inputs) {
     if (!is_array($inputs)) $inputs = func_get_args();
 
     assert(count($inputs) == $this->_nodes[0]);
@@ -234,7 +246,7 @@ class NeuralNetwork {
     return $this->_Hypothesis($this->_weights, $inputs);
   }
 
-  private function _Hypothesis(&$weights, &$inputs) {
+  private function _Hypothesis(array &$weights, array &$inputs) {
     // PRE :: inputs is an array with length equal to the number of input units
     //          on the neural network.
 
@@ -242,7 +254,7 @@ class NeuralNetwork {
     return $this->_activations[count($this->_nodes) - 1];
   }
 
-  private function _Cost(&$weights, &$inputs, &$outputs) {
+  private function _Cost(array &$weights, array &$inputs, array &$outputs) {
     // TODO highly optimizable
     $res = 0;
 
@@ -259,11 +271,11 @@ class NeuralNetwork {
     return $res;
   }
 
-  private function _Sigmoid($value) {
+  private function _Sigmoid(float $value) {
     return 1/(1 + pow(M_E, -$value));
   }
 
-  private function _SigmoidDerivative($value) {
+  private function _SigmoidDerivative(float $value) {
     return $value * (1 - $value);
   }
 
