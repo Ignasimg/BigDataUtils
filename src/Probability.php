@@ -4,12 +4,18 @@ namespace IgnasiMG\BigDataUtils;
 
 // Explanation http://keithschwarz.com/darts-dice-coins/
 // Source slightly tuned from https://gist.github.com/tystr/3171981
+
 class Probability {
     private $_N = 0;
     private $_prob = [];
     private $_alias = [];
 
-    function __construct($probabilities) {
+  /**
+   * Probability constructor.
+   *
+   * @param array $probabilities
+   */
+  function __construct(array $probabilities) {
         $small = $large = [];
 
         $this->_N = count($probabilities);
@@ -47,9 +53,12 @@ class Probability {
         }
     }
 
-    public function draw() {
-        $i = mt_rand(0, $this->_N-1);
-        $coinToss = 1 * mt_rand() / mt_getrandmax() < $this->_prob[$i];
+  /**
+   * @return int
+   */
+  public function draw() {
+        $i = random_int(0, $this->_N-1);
+        $coinToss = 1 * random_int(0, PHP_INT_MAX) / PHP_INT_MAX < $this->_prob[$i];
         return $coinToss ? $i : $this->_alias[$i];
     }
 }
