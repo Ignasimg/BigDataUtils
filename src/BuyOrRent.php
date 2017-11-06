@@ -27,26 +27,3 @@ class BuyOrRent {
     return $p->draw();
   }
 }
-
-
-
-// Experimentation
-$m = new MassMean();
-
-for ($i = 0; $i < 3000; $i++) {
-  $pc = 1000; // Preu compra
-  $rp = 1;  // Rent price
-
-  $real_days = 1 * mt_rand(1, 1500);
-  $correct_amount = (($real_days*$rp) > $pc) ? $pc : ($real_days*$rp);
-
-  $rentingDays = BuyOrRent::rentingDays($rp, $pc);
-  $real_amount = ($rentingDays >= $real_days) ? ($real_days*$rp) : ($rentingDays*$rp)+$pc;
-
-  $m->AddValue($real_amount/$correct_amount);
-}
-
-var_dump($m->mean);
-var_dump($m->variance);
-var_dump($m->stdDev);
-var_dump($m->numValues);
